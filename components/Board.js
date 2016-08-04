@@ -28,43 +28,42 @@ function renderSquare(i, position, onSquareClick) {
     const [knightX, knightY] = position;
     const piece = (x === knightX && y === knightY) ? <Knight /> : null
     return (
-      <div key={i}
-           style={{ width: '12.5%', height: '12.5%'}}
-           onClick={ e => {
-             e.preventDefault()
-             onSquareClick([x,y], position) 
-        }}>
+      <div 
+        key={i}
+        style={{ width: '12.5%', height: '12.5%'}}
+        onClick={ e => {
+          e.preventDefault()
+          onSquareClick([x,y], position) 
+      }}>
         <Square 
-          black={black}>
+          black={black}
+          position={position}>
           {piece}        
         </Square>
       </div>
     );
 }
 
-export default class Board extends Component  {
-	render() {
-		const { position, onSquareClick } = this.props
-	    console.log("BOARD COMPONENT")
-	    console.log("POSITION: ", position)
-	    var squares = [];
-	    for (let i = 0; i < 64; i++) {
-	    	squares.push(renderSquare(i, position, onSquareClick))
-	    }
-	    return (
-			<div
-			  clasName="BOARD"
-			  style={{
-		     	width: '640px',
-		        height: '640px',
-		        display: 'flex',
-		        flexWrap: 'wrap'
-			  }}>
-			  {squares}
-			</div>
-		)
+const Board = ({ position, onSquareClick }) =>  {
+    console.log("BOARD COMPONENT")
+    console.log("POSITION: ", position)
+    var squares = [];
+    for (let i = 0; i < 64; i++) {
+    	squares.push(renderSquare(i, position, onSquareClick))
     }
+    return (
+		<div
+		  clasName="BOARD"
+		  style={{
+	     	width: '640px',
+        height: '640px',
+        display: 'flex',
+        flexWrap: 'wrap'
+		}}>
+		  {squares}
+		</div>
+	)
 }
 
 
-export default Board
+export default DragDropContext(HTML5Backend)(Board)
