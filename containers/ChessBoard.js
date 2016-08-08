@@ -22,14 +22,13 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 	return {
 		onSquareClick: (position, pastPosition) => {
 			console.log("ONSQUARECLICK")
-	        if(canMove(position[0], position[1], pastPosition)) {
-	          console.log("MOVING:", position)
-              dispatch(moveKnight(position))
-	        } else {
-	          console.log("CAN'T MOVE")
-              null
-	        }
-			
+      if(true){//canMove(position[0], position[1], pastPosition)) {
+        console.log("MOVING:", position)
+        dispatch(moveKnight(position))
+      } else {
+        console.log("CAN'T MOVE")
+        null
+      }
 		}
 	}
 }

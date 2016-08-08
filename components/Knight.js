@@ -7,12 +7,14 @@ const Types = {
 
 const knightSource = {
   beginDrag(props) {
-    console.log("BEGIN KNIGHT DRAG")
+    console.log("KNIGHT SOURCE BEGIN DRAG")
+    console.log("PROPS: ", props)
     return {}
   },
 
   endDrag(props, monitor, component) {
-    console.log("ENDING KNIGHT DRAG")
+    console.log("KNIGHT SOURCE END DRAG")
+    console.log("PROPS: ", props)
     if(!monitor.didDrop()) {
       return
     }
