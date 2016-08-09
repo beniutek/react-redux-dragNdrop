@@ -3,8 +3,9 @@ import { moveKnight } from '../actions'
 import Board from '../components/Board'
 
 const mapStateToProps = (state, ownProps) => {
-	console.log("MAPSTATETOPROPS")
-	console.log("STATE.POSITION: ", state.position)
+	console.log("BOARD MAPSTATETOPROPS")
+	console.log("BOARD STATE.POSITION: ", state.position)
+	console.log("BOARD OWNPROPS: ", ownProps.position)
 	return {
 		position: state.position
 	}
@@ -14,15 +15,17 @@ const canMove = (toX, toY, pastPosition) => {
 	const [x, y] = pastPosition
 	const dx = toX - x
 	const dy = toY - y
-	return (Math.abs(dx) === 2 && Math.abs(dy) === 1) || (Math.abs(dx) === 1 && Math.abs(dy) === 2)
+	return (Math.abs(dx) === 2 && Math.abs(dy) === 1) || 
+	  (Math.abs(dx) === 1 && Math.abs(dy) === 2)
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-	console.log("MAPDISPATCHTOPROPS")
+	console.log("BOARD MAPDISPATCHTOPROPS")
+	console.log("BOARD OWNPROPS: ", ownProps.position)
 	return {
 		onSquareClick: (position, pastPosition) => {
 			console.log("ONSQUARECLICK")
-      if(true){//canMove(position[0], position[1], pastPosition)) {
+      if(canMove(position[0], position[1], pastPosition)) {
         console.log("MOVING:", position)
         dispatch(moveKnight(position))
       } else {

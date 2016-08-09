@@ -1,28 +1,27 @@
-import React, { Component } from 'react'
-import { DragSource } from 'react-dnd'
-
-const Types = {
-  KNIGHT: 'knight'
-}
+import React, { Component, PropTypes } from 'react';
+import { DragSource } from 'react-dnd';
 
 const knightSource = {
-  beginDrag(props) {
-    console.log("KNIGHT SOURCE BEGIN DRAG")
-    console.log("PROPS: ", props)
-    return {}
+  beginDrag(props, monitor, component) {
+    console.log("KNIGHT SOURCE BEGIN DRAG");
+    console.log("COMPONENT: ", component);
+    console.log("PROPS: ", props);
+    return { position: props.position }
   },
 
   endDrag(props, monitor, component) {
-    console.log("KNIGHT SOURCE END DRAG")
+    console.log("END DRAG")
     console.log("PROPS: ", props)
-    if(!monitor.didDrop()) {
-      return
+    console.log("COMPONENT", component)
+    if (!monitor.didDrop()) {
+      console.log("DID DROP")
+      return;
     }
 
-    const item = monitor.getItem()
-    const dropResult = monitor.getDropResult()
-    console.log("ITEM: ", item)
-    console.log("DROP RESULT: ", dropResult)
+    const item = monitor.getItem();
+    const dropResult = monitor.getDropResult();
+    console.log("ITEM: ", item);
+    console.log("DROP RESULT: ", dropResult);
   }
 }
 
@@ -30,7 +29,7 @@ function collect(connect, monitor) {
   return {
     connectDragSource: connect.dragSource(),
     isDragging: monitor.isDragging()
-  }
+  };
 }
 
 const Knight = ({isDragging, connectDragSource}) => {
@@ -42,11 +41,16 @@ const Knight = ({isDragging, connectDragSource}) => {
         color: isDragging ? "red" : 'inherit',
       	height: '100%', 
       	width: '100%',
-        fontSize: 75,
+        fontSize: 60,
     }}>
       {horse}
     </div>
   );
 }
 
-export default DragSource(Types.KNIGHT, knightSource, collect)(Knight)
+Knight.propTypes = {
+  connectDragSource: PropTypes.func.isRequired,
+  isDragging: PropTypes.bool.isRequired
+};
+
+export default DragSource('knight', knightSource, collect)(Knight);
