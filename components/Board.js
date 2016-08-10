@@ -32,11 +32,11 @@ function renderPiece(x,y,X,Y) {
     return <Knight />
   }
 }
-const Board = ({ position, onSquareClick }) =>  {
+const Board = ({ currentPosition, onSquareClick }) =>  {
   console.log("BOARD COMPONENT")
   var squares = [];
   for (let i = 0; i < 64; i++) {
-  	squares.push(renderSquare(i, position, onSquareClick))
+  	squares.push(renderSquare(i, currentPosition, onSquareClick))
   }
   return (
 		<div

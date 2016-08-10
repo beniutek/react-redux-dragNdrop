@@ -7,21 +7,6 @@ const knightSource = {
     console.log("COMPONENT: ", component);
     console.log("PROPS: ", props);
     return { position: props.position }
-  },
-
-  endDrag(props, monitor, component) {
-    console.log("END DRAG")
-    console.log("PROPS: ", props)
-    console.log("COMPONENT", component)
-    if (!monitor.didDrop()) {
-      console.log("DID DROP")
-      return;
-    }
-
-    const item = monitor.getItem();
-    const dropResult = monitor.getDropResult();
-    console.log("ITEM: ", item);
-    console.log("DROP RESULT: ", dropResult);
   }
 }
 

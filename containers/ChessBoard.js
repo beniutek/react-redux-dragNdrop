@@ -2,12 +2,11 @@ import { connect } from 'react-redux'
 import { moveKnight } from '../actions'
 import Board from '../components/Board'
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
 	console.log("BOARD MAPSTATETOPROPS")
 	console.log("BOARD STATE.POSITION: ", state.position)
-	console.log("BOARD OWNPROPS: ", ownProps.position)
 	return {
-		position: state.position
+		currentPosition: state.position
 	}
 }
 

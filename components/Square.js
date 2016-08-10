@@ -4,17 +4,9 @@ import { findDOMNode } from 'react-dom'
 import { DropTarget } from 'react-dnd'
 import { moveKnight } from '../actions'
 
-function collect(connect, monitor) {
-  return {
-    connectDropTarget: connect.dropTarget(),
-    isOver: monitor.isOver(),
-  }
-}
-
 const mapStateToProps = (state, ownProps) => {
-  
   return {
-    position: state.position
+    currentPosition: state.position
   };
 }
 
@@ -26,8 +18,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   }
 }
 
-const canMoveKnight = (position) => {
-  const [x, y] = position
+const canMoveKnight = (pastPosition, position) => {
+  const [x, y] = pastPosition
   const dx = position[0] - x
   const dy = position[1] - y
   return (Math.abs(dx) === 2 && Math.abs(dy) === 1) || 
@@ -43,17 +35,33 @@ const squareTarget = {
   },
 
   canDrop(props) {
-    return canMoveKnight(props.position);
+    return canMoveKnight(props.currentPosition, props.position);
   }
 }
 
-const Square = ({ position, isOver, connectDropTarget, black, children }) => {
-  const fill = black ? 'black' : 'white';
+function collect(connect, monitor) {
+  return {
+    connectDropTarget: connect.dropTarget(),
+    isOver: monitor.isOver(),
+    canDrop: monitor.canDrop(),
+  }
+}
+
+function determineColor(isOver, canDrop) {
+  if(isOver && canDrop) { return 'green' }
+  if(isOver && !canDrop) { return 'red' }
+  if(!isOver && canDrop) { return 'yellow' }
+}
+
+const Square = ({ position, isOver, canDrop, connectDropTarget, black, children }) => {
+  let fill = black ? 'black' : 'white';
+  fill = canDrop ? 'yellow' : fill
   const stroke = black ? 'white' : 'black';
+  const color = determineColor(isOver, canDrop)
   return connectDropTarget(
     <div 
       style={{
-      backgroundColor: isOver ? 'yellow' : fill,
+      backgroundColor: isOver ? color : fill,
       color: stroke,
       width: '100%',
       height: '100%'
