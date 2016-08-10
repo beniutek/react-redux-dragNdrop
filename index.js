@@ -9,8 +9,9 @@ let store = createStore(App)
 
 ReactDOM.render(
 	<Provider 
-	  store={store}>
-	  <ChessBoard position={[0,0]}/>
+	  store={store}
+  >
+	  <ChessBoard />
 	</Provider>,
 	document.getElementById('root')
 )
